@@ -7,7 +7,7 @@ A simple package to test Jupyter notebook result for the Le Wagon's Data Science
 Installation with `pip` from GitHub:
 
 ```bash
-pip install git+https://github.com/lewagon/data-meta.git
+pip install git+https://github.com/lewagon/nbresult.git
 ```
 
 **OR**
