@@ -1,0 +1,7 @@
+setup.py
+nbresult/__init__.py
+nbresult/challenge_result.py
+nbresult.egg-info/PKG-INFO
+nbresult.egg-info/SOURCES.txt
+nbresult.egg-info/dependency_links.txt
+nbresult.egg-info/top_level.txt
