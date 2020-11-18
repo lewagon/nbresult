@@ -34,7 +34,6 @@ Considering the default data challenge architecture:
 │   └── data.csv
 └── tests
     ├── __init__.py
-    ├── test_notebooks.py
     └── test_results.py
 ```
 
