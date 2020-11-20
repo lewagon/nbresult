@@ -1,4 +1,4 @@
-import json
+import pickle
 import os
 
 
@@ -13,17 +13,18 @@ class ChallengeResult:
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    class ResultEncoder(json.JSONEncoder):
-        """Utility class to serialize self to a JSON"""
+    # class ResultEncoder(json.JSONEncoder):
+    #     """Utility class to serialize self to a JSON"""
 
-        def default(self, o):
-            return o.__dict__
+    #     def default(self, o):
+    #         return o.__dict__
 
     def write(self):
         """Write down values from initialize to result.json"""
-        result_file = os.path.join(os.getcwd(), "tests", "results.json")
-        with open(result_file, 'w') as file:
-            json.dump(self, file, cls=self.ResultEncoder, indent=2)
+        result_file = os.path.join(os.getcwd(), "tests", "results.pickle")
+        # with open(result_file, 'w') as file:
+        file = open(result_file, 'w')
+        pickle.dump(self.__dict__, file)
 
     def load(self, test_file):
         """Load the results.json file"""
