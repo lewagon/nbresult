@@ -47,10 +47,11 @@ At the end of the notebook add a cell with the following code:
 from nbresult.challenge_result import ChallengeResult
 
 
-RESULT = ChallengeResult(
+result_analysis = ChallengeResult(
+    'analysis',
     score=log_model_score
 )
-RESULT.write()
+result_analysis.write()
 ```
 
 This outputs a `results.json` file in the `tests` directory:

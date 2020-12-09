@@ -1,6 +1,9 @@
 import pickle
 import os
-
+import subprocess
+import unittest
+import re
+import sys
 
 class ChallengeResult:
     """
@@ -9,32 +12,43 @@ class ChallengeResult:
     by `make` to validate challenge outcome)
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, name, **kwargs):
+        self.name = name
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-    # class ResultEncoder(json.JSONEncoder):
-    #     """Utility class to serialize self to a JSON"""
-
-    #     def default(self, o):
-    #         return o.__dict__
-
     def write(self):
-        """Write down values from initialize to result.json"""
-        result_file = os.path.join(os.getcwd(), "tests", "results.pickle")
-        # with open(result_file, 'w') as file:
-        file = open(result_file, 'w')
-        pickle.dump(self.__dict__, file)
+        """Write down values from initialize to result.pickle"""
+        if sys.getsizeof(self) > 10_000:
+            raise ValueError(f'Check the arguments of your ChallengeResult {self.name}, one is way too big.§')
+        result_file = os.path.join(os.getcwd(), "tests", f"{self.name}.pickle")
+        pickle.dump(self, open(result_file, 'wb'))
+        self.pickle = result_file
 
-    def load(self, test_file):
-        """Load the results.json file"""
-        result_file = os.path.join(os.path.dirname(test_file), 'results.json')
-        with open(result_file) as json_file:
-            return json.load(json_file)
+    def check(self):
+        """"""
+        command = f"PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_{self.name}.py"
+        res = os.popen(command)
+        result = res.read()
+        if res.close() is None:
+            result = f"""{result}\n
+💯 You can commit your code:\n
+\033[1;32mgit\033[39m add tests/{self.name}.pickle\n
+\033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
+\033[32mgit\033[39m push origin master"""
+        return result
 
-    def check(self, test_func=None):
-        if test_func is None:
-            command = "PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_challenge_result.py"
-        else:
-            command = f"PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_challenge_result.py::TestChallengeResult::{test_func}"
-        return os.popen(command).read()
+class ChallengeResultTestCase(unittest.TestCase):
+    """"""
+
+    def setUp(self):
+        """Load the pickle file"""
+        name = re.sub(r'(?<!^)(?=[A-Z])', '_', self.__class__.__name__).lower()[len('test_'):]
+        result_file = os.path.join(os.getcwd(), "tests", f"{name}.pickle")
+        self.result = pickle.load(open(result_file, 'rb'))
+
+
+
+
+
+
