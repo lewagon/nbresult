@@ -3,8 +3,10 @@ from setuptools import setup
 
 setup(
     name='nbresult',
-    version='1.0',
+    description='Extract results from Jupyter notebooks',
+    version='0.0.1',
+    author='Kevin Robert',
+    author_email='kevin@lewagon.org',
     packages=find_packages(),
-    include_package_data=True,
-    description='Extract results from Jupyter notebooks'
+    include_package_data=True
 )
