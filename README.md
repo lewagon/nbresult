@@ -45,10 +45,10 @@ Anywhere in the notebook you can add a cell with the following code:
 ```python
 from nbresult import ChallengeResult
 
-result_analysis = ChallengeResult('score',
+result = ChallengeResult('score',
     score=log_model_score
 )
-result_analysis.write()
+result.write()
 ```
 
 This outputs a `score.pickle` file in the `tests` directory:
@@ -110,7 +110,7 @@ Run the tests inside the notebook:
 ```python
 from nbresult import ChallengeResult
 
-result_analysis = ChallengeResult('score',
+result = ChallengeResult('score',
     score=log_model_score
 )
 result_analysis.write()

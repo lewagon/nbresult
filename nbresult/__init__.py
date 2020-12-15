@@ -1,9 +1,9 @@
 import pickle
 import os
-import subprocess
 import unittest
 import re
 import sys
+
 
 class ChallengeResult:
     """
@@ -20,14 +20,15 @@ class ChallengeResult:
     def write(self):
         """Write down values from initialize to result.pickle"""
         if sys.getsizeof(self) > 10_000:
-            raise ValueError(f'Check the arguments of your ChallengeResult {self.name}, one is way too big.§')
+            raise ValueError(f"""Check the arguments of your ChallengeResult
+                {self.name}, one is way too big.""")
         result_file = os.path.join(os.getcwd(), "tests", f"{self.name}.pickle")
         pickle.dump(self, open(result_file, 'wb'))
-        self.pickle = result_file
 
     def check(self):
-        """"""
-        command = f"PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_{self.name}.py"
+        """returns test output on the ChallengeResult"""
+        command = f"""PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
+        tests/test_{self.name}.py"""
         res = os.popen(command)
         result = res.read()
         if res.close() is None:
@@ -37,6 +38,7 @@ class ChallengeResult:
 \033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
 \033[32mgit\033[39m push origin master"""
         return result
+
 
 class ChallengeResultTestCase(unittest.TestCase):
     """"""
