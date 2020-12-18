@@ -4,21 +4,10 @@ A simple package to test Jupyter notebook result for the Le Wagon's Data Science
 
 ## Installation
 
-Installation with `pip`:
+Installation with `pip` from [Pypi](https://pypi.org/):
 
 ```bash
 pip install nbresult
-```
-
-**OR**
-
-Manual installation:
-- Download the package
-- Go to the package directory
-- Install the package with
-
-```bash
-pip install .
 ```
 
 ## Usage
