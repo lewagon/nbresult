@@ -4,10 +4,10 @@ A simple package to test Jupyter notebook result for the Le Wagon's Data Science
 
 ## Installation
 
-Installation with `pip` from GitHub:
+Installation with `pip`:
 
 ```bash
-pip install git+https://github.com/lewagon/nbresult.git
+pip install nbresult
 ```
 
 **OR**
@@ -71,9 +71,10 @@ Now you would like to write test on the `log_model_score` with `pytest`. Create 
 # tests/test_score.py
 from nbresult import ChallengeResultTestCase
 
+
 class TestScore(ChallengeResultTestCase):
 
-    def test_features_name_values(self):
+    def test_score_is_above_82(self):
         self.assertEqual(self.result.score > 0.82, True)
 ```
 
@@ -83,7 +84,7 @@ Finally you can run your tests with `pytest`:
 pytest tests/test_score.py
 ```
 
-![pytest](img/pytest.png)
+![pytest](img/pytest_check.png)
 
 OR
 
@@ -101,7 +102,7 @@ pytest:
 
 - Run `make`
 
-![make](img/make.png)
+![make](img/make_check.png)
 
 OR
 
@@ -113,8 +114,8 @@ from nbresult import ChallengeResult
 result = ChallengeResult('score',
     score=log_model_score
 )
-result_analysis.write()
+result.write()
 print(result.check())
 ```
 
-![notebook](img/notebook.png)
+![notebook](img/notebook_check.png)

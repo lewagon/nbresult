@@ -27,8 +27,7 @@ class ChallengeResult:
 
     def check(self):
         """returns test output on the ChallengeResult"""
-        command = f"""PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
-        tests/test_{self.name}.py"""
+        command = f"""PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_{self.name}.py"""
         res = os.popen(command)
         result = res.read()
         if res.close() is None:
@@ -37,6 +36,7 @@ class ChallengeResult:
 \033[1;32mgit\033[39m add tests/{self.name}.pickle\n
 \033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
 \033[32mgit\033[39m push origin master"""
+
         return result
 
 
