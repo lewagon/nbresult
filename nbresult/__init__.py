@@ -27,7 +27,8 @@ class ChallengeResult:
 
     def check(self):
         """returns test output on the ChallengeResult"""
-        command = f"""PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes tests/test_{self.name}.py"""
+        path = f"tests/test_{self.name}.py"
+        command = f"PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes {path}"
         res = os.popen(command)
         result = res.read()
         if res.close() is None:
@@ -45,12 +46,7 @@ class ChallengeResultTestCase(unittest.TestCase):
 
     def setUp(self):
         """Load the pickle file"""
-        name = re.sub(r'(?<!^)(?=[A-Z])', '_', self.__class__.__name__).lower()[len('test_'):]
+        klass = self.__class__.__name__
+        name = re.sub(r'(?<!^)(?=[A-Z])', '_', klass).lower()[len('test_'):]
         result_file = os.path.join(os.getcwd(), "tests", f"{name}.pickle")
         self.result = pickle.load(open(result_file, 'rb'))
-
-
-
-
-
-

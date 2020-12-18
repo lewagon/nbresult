@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='nbresult',
-    version='0.0.2',
+    version='0.0.3',
     description='Extract results from Jupyter notebooks',
     license="MIT",
     long_description=long_description,
