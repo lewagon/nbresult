@@ -22,72 +22,58 @@ Considering the default data challenge architecture:
 ├── data
 │   └── data.csv
 └── tests
-    ├── __init__.py
-    └── test_results.py
+    └── __init__.py
 ```
 
 If you want to test a variable `log_model_score` from the `challenge.ipynb` notebook with `pytest`:
 
 ![variable](img/variable.png)
 
-At the end of the notebook add a cell with the following code:
+Anywhere in the notebook you can add a cell with the following code:
 
 ```python
-from nbresult.challenge_result import ChallengeResult
+from nbresult import ChallengeResult
 
-
-RESULT = ChallengeResult(
+result = ChallengeResult('score',
     score=log_model_score
 )
-RESULT.write()
+result.write()
 ```
 
-This outputs a `results.json` file in the `tests` directory:
+This outputs a `score.pickle` file in the `tests` directory:
 
-```json
-# tests/results.json
-
-{
-  "score": 0.829004329004329
-}
+```bash
+.
+├── challenge.ipynb
+├── Makefile
+├── README.md
+├── data
+│   └── data.csv
+└── tests
+    ├── __init__.py
+    └── score.pickle
 ```
 
-The notebook results can be imported from anywhere with:
+Now you would like to write test on the `log_model_score` with `pytest`. Create a `test_score.py` file:
 
 ```python
-from nbresult.challenge_result import ChallengeResult
+# tests/test_score.py
+from nbresult import ChallengeResultTestCase
 
 
-results = ChallengeResult().load('path/to/results.json')
-```
+class TestScore(ChallengeResultTestCase):
 
-So you can write test the `log_model_score` with `pytest`:
-
-```python
-# test_results.py
-
-import unittest
-import os
-from nbresult.challenge_result import ChallengeResult
-
-
-class TestResults(unittest.TestCase):
-    results = ChallengeResult().load(os.path.join(
-        os.path.dirname(__file__),
-        'results.json')
-    )
-
-    def test_model_score(self):
-        self.assertEqual(self.results['score'] > 0.82, True)
+    def test_score_is_above_82(self):
+        self.assertEqual(self.result.score > 0.82, True)
 ```
 
 Finally you can run your tests with `pytest`:
 
 ```bash
-pytest tests/test_results.py
+pytest tests/test_score.py
 ```
 
-![pytest](img/pytest.png)
+![pytest](img/pytest_check.png)
 
 OR
 
@@ -105,4 +91,20 @@ pytest:
 
 - Run `make`
 
-![make](img/make.png)
+![make](img/make_check.png)
+
+OR
+
+Run the tests inside the notebook:
+
+```python
+from nbresult import ChallengeResult
+
+result = ChallengeResult('score',
+    score=log_model_score
+)
+result.write()
+print(result.check())
+```
+
+![notebook](img/notebook_check.png)
