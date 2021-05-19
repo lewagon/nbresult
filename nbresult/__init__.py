@@ -28,7 +28,7 @@ class ChallengeResult:
     def check(self):
         """returns test output on the ChallengeResult"""
         path = f"tests/test_{self.name}.py"
-        command = f"PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes {path}"
+        command = f"PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -v --color=yes {path}"
         res = os.popen(command)
         result = res.read()
         if res.close() is None:
