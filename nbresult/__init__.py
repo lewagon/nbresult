@@ -3,6 +3,7 @@ import os
 import unittest
 import re
 import sys
+import pandas as pd
 
 
 class ChallengeResult:
@@ -49,4 +50,4 @@ class ChallengeResultTestCase(unittest.TestCase):
         klass = self.__class__.__name__
         name = re.sub(r'(?<!^)(?=[A-Z])', '_', klass).lower()[len('test_'):]
         result_file = os.path.join(os.getcwd(), "tests", f"{name}.pickle")
-        self.result = pickle.load(open(result_file, 'rb'))
+        self.result = pd.read_pickle(result_file)
