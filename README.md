@@ -112,5 +112,6 @@ print(result.check())
 # nbresult checker
 
 ``` bash
-alias nbr="nbresult_checker $@"
+cd data-solutions
+nbresult_checker run .
 ```
