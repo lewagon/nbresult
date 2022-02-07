@@ -3,6 +3,14 @@ from wagon_common.helpers.scope import resolve_scope
 
 import pickle
 
+import warnings
+
+from colorama import Fore, Style
+
+
+# TBC: avoid pickle data types warning
+warnings.filterwarnings("ignore", category=UserWarning)
+
 
 def run_check(sources, verbose):
     """
@@ -38,4 +46,26 @@ def run_check(sources, verbose):
 
                 pickles[data_type][pickle_file].append(key)
 
-    print(pickles)
+    # show results
+    print(Fore.BLUE
+          + "\nPickles containing:"
+          + Style.RESET_ALL)
+
+    for data_type, pickle_files in pickles.items():
+
+        print(f"- {data_type}: {sum([len(v) for k, v in pickle_files.items()])}")
+
+    # show detailed results
+    for data_type, pickle_files in pickles.items():
+
+        print(Fore.BLUE
+              + f"\nPickles containing {data_type}:"
+              + Style.RESET_ALL)
+
+        for pickle_file, attributes in pickle_files.items():
+
+            print(f"- {pickle_file}: ", end="")
+
+            print(Fore.GREEN
+                  + f"({', '.join(attributes)})"
+                  + Style.RESET_ALL)
