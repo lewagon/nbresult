@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from nbresult.pickle_checker import run_check
+
+from wagon_common.helpers.click.aliased_group import AliasedGroup
+
+import click
+
+from colorama import Fore, Style
+
+
+@click.group(cls=AliasedGroup)
+def nbrchecker():
+    pass
+
+
+@nbrchecker.command()
+@click.argument(
+    "sources",                          # list of sources to verify
+    nargs=-1,                           # variable number of arguments
+    type=click.Path(exists=True))       # verify that the source params exist
+@click.option(
+    "-v", "--verbose/--no-verbose",
+    default=False,
+    is_flag=True,
+    help="Verbose mode (default: False).")
+def run(sources, verbose):
+    """
+    List provided source pickle files and directories of pickle files containing complex python data types
+    """
+
+    if verbose:
+        print(Fore.BLUE
+              + "\nCommand parameters:"
+              + Style.RESET_ALL
+              + f"\nsource {sources}"
+              + f"\nverbose {verbose}")
+
+    return run_check(sources, verbose)
+
+
+if __name__ == '__main__':
+    nbrchecker()

@@ -108,3 +108,9 @@ print(result.check())
 ```
 
 ![notebook](img/notebook_check.png)
+
+# nbresult checker
+
+``` bash
+alias nbr="nbresult_checker $@"
+```
