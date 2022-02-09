@@ -1,3 +1,4 @@
 nbresult.egg-info
 nbresult/__pycache__
+.DS_Store
 dist

@@ -108,3 +108,10 @@ print(result.check())
 ```
 
 ![notebook](img/notebook_check.png)
+
+# nbresult checker
+
+``` bash
+cd data-solutions
+nbresult_checker run .
+```

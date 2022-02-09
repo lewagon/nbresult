@@ -1,0 +1,4 @@
+click
+colorama
+wagon_common>=0.2.3
+pickle
