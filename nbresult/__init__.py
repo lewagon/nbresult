@@ -1,8 +1,11 @@
 import pickle
 import os
+from os.path import dirname, join, abspath
 import unittest
 import re
 import sys
+import subprocess
+import glob
 
 
 class ChallengeResult:
@@ -12,41 +15,88 @@ class ChallengeResult:
     by `make` to validate challenge outcome)
     """
 
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, subdir=None, **kwargs):
         self.name = name
+        self.subdir = subdir
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+    def _locate_tests(self):
+
+        cwd = os.getcwd()
+
+        while not os.path.isdir(join(cwd, 'tests')):
+            cwd = dirname(cwd)
+            if cwd == os.sep:
+                raise NameError(
+                    "Could not find tests dir in any parent folder")
+
+        tests_path = join(cwd, 'tests')
+
+        if self.subdir is not None:
+            tests_path = join(tests_path, self.subdir)
+
+        return tests_path
+
     def write(self):
         """Write down values from initialize to result.pickle"""
+        tests_path = self._locate_tests()
+
         if sys.getsizeof(self) > 10_000:
             raise ValueError(f"""Check the arguments of your ChallengeResult
                 {self.name}, one is way too big.""")
-        result_file = os.path.join(os.getcwd(), "tests", f"{self.name}.pickle")
+        result_file = join(tests_path, f"{self.name}.pickle")
         pickle.dump(self, open(result_file, 'wb'))
 
     def check(self):
         """returns test output on the ChallengeResult"""
-        path = f"tests/test_{self.name}.py"
-        command = f"PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -v --color=yes {path}"
-        res = os.popen(command)
-        result = res.read()
-        if res.close() is None:
-            result = f"""{result}\n
+        tests_path = self._locate_tests()
+        file_path = f"test_{self.name}.py"
+        command = ["python3", "-m", "pytest", "-v", "--color=yes", file_path]
+        p = subprocess.Popen(command,
+                             cwd=tests_path, # set current working directory
+                             stdin=subprocess.PIPE,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE)
+        output, error = p.communicate(b"")  # binary input passed as parameter
+        result = output.decode("utf-8")
+        if error.decode("utf-8") == '':
+            result = f"""
+{result}\n
 💯 You can commit your code:\n
 \033[1;32mgit\033[39m add tests/{self.name}.pickle\n
 \033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
-\033[32mgit\033[39m push origin master"""
+\033[32mgit\033[39m push origin master
+"""
 
         return result
 
 
 class ChallengeResultTestCase(unittest.TestCase):
-    """"""
+    """Read pickle file to provide access to its results in the python test file
+    """
+
+    def _locate_pickle(self, name):
+        '''Find pickle file based on its name.
+        Assumes unicity of pickle name from first `tests` parent folder above cwd
+        '''
+
+        cwd = os.getcwd()
+
+        while not os.path.isdir(join(cwd, 'tests')):
+            cwd = dirname(cwd)
+            if cwd == os.sep:
+                raise NameError(
+                    "Could not find tests dir in any parent folder")
+
+        pickle_path = glob.glob(
+            abspath(join(cwd, '**', f'{name}.pickle')), recursive=True)[0]
+
+        return pickle_path
 
     def setUp(self):
         """Load the pickle file"""
         klass = self.__class__.__name__
         name = re.sub(r'(?<!^)(?=[A-Z])', '_', klass).lower()[len('test_'):]
-        result_file = os.path.join(os.getcwd(), "tests", f"{name}.pickle")
+        result_file = self._locate_pickle(name)
         self.result = pickle.load(open(result_file, 'rb'))
