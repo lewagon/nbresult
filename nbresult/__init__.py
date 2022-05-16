@@ -83,14 +83,14 @@ class ChallengeResultTestCase(unittest.TestCase):
 
         cwd = os.getcwd()
 
-        while not os.path.isdir(join(cwd, 'tests')):
-            cwd = dirname(cwd)
+        while not os.path.isdir(os.path.join(cwd, 'tests')):
+            cwd = os.path.dirname(cwd)
             if cwd == os.sep:
                 raise NameError(
-                    "Could not find tests dir in any parent folder")
+                    "Could not find /tests directory in any parent folder")
 
         pickle_path = glob.glob(
-            abspath(join(cwd, '**', f'{name}.pickle')), recursive=True)[0]
+            os.path.abspath(os.path.join(cwd, '**', f'{name}.pickle')), recursive=True)[0]
 
         return pickle_path
 
