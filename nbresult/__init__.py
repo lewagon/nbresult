@@ -25,16 +25,16 @@ class ChallengeResult:
 
         cwd = os.getcwd()
 
-        while not os.path.isdir(join(cwd, 'tests')):
-            cwd = dirname(cwd)
+        while not os.path.isdir(os.path.join(cwd, 'tests')):
+            cwd = os.path.dirname(cwd)
             if cwd == os.sep:
                 raise NameError(
-                    "Could not find tests dir in any parent folder")
+                    "Could not find /tests directory in any parent folder")
 
-        tests_path = join(cwd, 'tests')
+        tests_path = os.path.join(cwd, 'tests')
 
         if self.subdir is not None:
-            tests_path = join(tests_path, self.subdir)
+            tests_path = os.path.join(tests_path, self.subdir)
 
         return tests_path
 
