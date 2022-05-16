@@ -45,7 +45,7 @@ class ChallengeResult:
         if sys.getsizeof(self) > 10_000:
             raise ValueError(f"""Check the arguments of your ChallengeResult
                 {self.name}, one is way too big.""")
-        result_file = join(tests_path, f"{self.name}.pickle")
+        result_file = os.path.join(tests_path, f"{self.name}.pickle")
         pickle.dump(self, open(result_file, 'wb'))
 
     def check(self):
