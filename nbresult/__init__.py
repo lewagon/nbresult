@@ -1,6 +1,5 @@
 import pickle
 import os
-from os.path import dirname, join, abspath
 import unittest
 import re
 import sys
