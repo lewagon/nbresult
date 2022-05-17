@@ -10,7 +10,7 @@ with open("requirements.txt") as f:
     requirements = [c.strip() for c in f.readlines()]
 
 setup(name='nbresult',
-      version='0.0.6',
+      version='0.0.7',
       description='Extract results from Jupyter notebooks',
       license="MIT",
       long_description=long_description,
