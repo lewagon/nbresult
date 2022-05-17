@@ -2,7 +2,7 @@
 
 A simple package to test Jupyter notebook result for the Le Wagon's Data Science Bootcamp.
 
-## Installation
+## 1. Installation
 
 Installation with `pip` from [Pypi](https://pypi.org/):
 
@@ -10,8 +10,9 @@ Installation with `pip` from [Pypi](https://pypi.org/):
 pip install nbresult
 ```
 
-## Usage
+## 2. Usage
 
+### 2.1 Basic usage
 Considering the default data challenge architecture:
 
 ```bash
@@ -109,7 +110,25 @@ print(result.check())
 
 ![notebook](img/notebook_check.png)
 
-# nbresult checker
+### 2.2 Advanced usage
+For more advanced folder structure, you also can specify a `subdir` folder in which store & read pickle file
+
+```python
+from nbresult import ChallengeResult
+
+result = ChallengeResult('score',
+    subdir='a', # This will store pickle in tests/a/score.pickle
+    score=log_model_score
+)
+result.write()
+result.check()
+```
+
+Check out detailed example below
+
+![subdir](img/subdir_demo.png)
+
+## 3. nbresult checker
 
 ``` bash
 cd data-solutions
