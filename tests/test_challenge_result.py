@@ -32,11 +32,11 @@ class TestChallengeResult(unittest.TestCase):
         # Generate pickle
         result = ChallengeResult('unicity', dummy=42)
         result.write()
-        # Navigate back to the cwd
-        os.chdir(cwd)
         content = os.listdir(tests_dir)
         # Manual tear down
+        os.chdir(cwd)
         os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+
         self.assertIn('unicity.pickle', content)
 
     def test_writer_create_pickle_on_package_challenge(self):
@@ -49,9 +49,42 @@ class TestChallengeResult(unittest.TestCase):
         # Generate pickle
         result = ChallengeResult('unicity', subdir=subdir, dummy=42)
         result.write()
-        # Navigate back to the cwd
-        os.chdir(cwd)
         content = os.listdir(tests_dir)
         # Manual tear down
+        os.chdir(cwd)
         os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+
         self.assertIn('unicity.pickle', content)
+
+    def test_checker_on_simple_challenge(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'simple_challenge_directory')
+        tests_dir = os.path.join(challenge_dir, 'tests')
+        # Navigate to the challenge directory
+        os.chdir(challenge_dir)
+        # Generate pickle
+        result = ChallengeResult('unicity', dummy=42)
+        result.write()
+        output = result.check()
+        # Manual tear down
+        os.chdir(cwd)
+        os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+
+        self.assertIn('You can commit your code', output)
+
+    def test_checker_on_package_challenge(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'package_challenge', 'toto')
+        subdir = 'first_tests'
+        tests_dir = os.path.join(challenge_dir, 'tests', subdir)
+        # Navigate to the challenge directory
+        os.chdir(challenge_dir)
+        # Generate pickle
+        result = ChallengeResult('unicity', subdir=subdir, dummy=42)
+        result.write()
+        output = result.check()
+        # Manual tear down
+        os.chdir(cwd)
+        os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+
+        self.assertIn('You can commit your code', output)
