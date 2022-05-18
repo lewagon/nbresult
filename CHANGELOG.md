@@ -1,5 +1,9 @@
 # 0.0.8 (2022-05-18)
 
+### Added
+
+- Tests
+
 ### Removed
 
 - `requirements.txt` as the package should rely as much as possible on the Python Standard Library
