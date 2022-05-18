@@ -127,3 +127,7 @@ result.check()
 Check out detailed example below
 
 ![subdir](img/subdir_demo.png)
+
+## Testing
+
+Run `make`.
