@@ -127,10 +127,3 @@ result.check()
 Check out detailed example below
 
 ![subdir](img/subdir_demo.png)
-
-## 3. nbresult checker
-
-``` bash
-cd data-solutions
-nbresult_checker run .
-```

@@ -1,3 +1,9 @@
+# 0.0.8 (2022-05-18)
+
+### Removed
+
+- `requirements.txt` as the package should rely as much as possible on the Python Standard Library
+- `nbresult_checker` as it has a dependency with an internal package
 
 # 0.0.6 (2022-05-17)
 
