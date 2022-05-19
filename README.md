@@ -130,4 +130,4 @@ Check out detailed example below
 
 ## Testing
 
-Run `make`.
+Run `make`
