@@ -128,9 +128,6 @@ Check out detailed example below
 
 ![subdir](img/subdir_demo.png)
 
-## 3. nbresult checker
+## Testing
 
-``` bash
-cd data-solutions
-nbresult_checker run .
-```
+Run `make`

@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test-solutions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8.12' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64'
+      - name: Install pytest
+        run: pip install -U pytest
+      - name: Run tests
+        run: make pytest
