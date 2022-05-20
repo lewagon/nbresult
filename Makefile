@@ -14,7 +14,7 @@ build:
 push_test:
 	twine upload --repository testpypi dist/*
 
-test_install:
+install_from_testpypi:
 	python -m pip install --index-url https://test.pypi.org/simple/ nbresult
 
 push_prod:
