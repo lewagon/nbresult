@@ -88,3 +88,24 @@ class TestChallengeResult(unittest.TestCase):
         os.remove(os.path.join(tests_dir, 'unicity.pickle'))
 
         self.assertIn('You can commit your code', output)
+
+    def test_file_path_to_add(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'simple_challenge_directory')
+        tests_dir = os.path.join(challenge_dir, 'tests')
+        os.chdir(challenge_dir)
+        result = ChallengeResult('unicity', dummy=42)
+        result.write()
+        output = result.check()
+        self.assertIn(f'add tests/unicity.pickle', output)
+
+    def test_subdir_is_in_the_file_path_to_add(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'package_challenge', 'toto')
+        subdir = 'first_tests'
+        tests_dir = os.path.join(challenge_dir, 'tests', subdir)
+        os.chdir(challenge_dir)
+        result = ChallengeResult('unicity', subdir=subdir, dummy=42)
+        result.write()
+        output = result.check()
+        self.assertIn(f'add tests/{subdir}/unicity.pickle', output)
