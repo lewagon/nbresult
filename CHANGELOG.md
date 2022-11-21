@@ -1,3 +1,10 @@
+# 0.0.9 (2022-11-21)
+
+### Added
+
+- Support subdirectory in commit step
+- Tests support subdirectory in commit step
+
 # 0.0.8 (2022-05-18)
 
 ### Added
