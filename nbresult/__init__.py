@@ -64,10 +64,13 @@ class ChallengeResult:
         output, error = sub_process.communicate(b"")  # binary input passed as parameter
         result = output.decode("utf-8")
         if error.decode("utf-8") == '':
+            tests_directory = 'tests'
+            if self.subdir:
+                tests_directory = f'{tests_directory}/{self.subdir}'
             result = f"""
 {result}\n
 💯 You can commit your code:\n
-\033[1;32mgit\033[39m add tests/{self.name}.pickle\n
+\033[1;32mgit\033[39m add {tests_directory}/{self.name}.pickle\n
 \033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
 \033[32mgit\033[39m push origin master
 """
