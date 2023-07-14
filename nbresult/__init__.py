@@ -17,9 +17,10 @@ class ChallengeResult:
     by `make` to validate challenge outcome)
     """
 
-    def __init__(self, name, subdir=None, **kwargs):
+    def __init__(self, name, subdir=None, notebook_env=False, **kwargs):
         self.name = name
         self.subdir = subdir
+        self.notebook_env = notebook_env
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -50,6 +51,9 @@ class ChallengeResult:
         result_file = os.path.join(tests_path, f"{self.name}.pickle")
         with open(result_file, 'wb') as file:
             dill.dump(self, file)
+        if self.notebook_env:
+            result_env = os.path.join(tests_path, f"{self.name}_env.pickle")
+            dill.dump_session(result_env)
 
     def check(self):
         """returns test output on the ChallengeResult"""
@@ -88,6 +92,9 @@ class ChallengeResultTestCase(unittest.TestCase):
         result_file = _locate_pickle(name)
         with open(result_file, 'rb') as file:
             self.result = dill.load(file)
+        env_path = result_file.replace('.pickle', '_env.pickle')
+        if os.path.exists(env_path):
+            dill.load_module(env_path)
 
 
 def _locate_pickle(name):
