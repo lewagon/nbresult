@@ -1,7 +1,7 @@
 """
 nbresult package is for Le Wagon bootcamps students
 """
-import pickle
+import dill
 import os
 import unittest
 import re
@@ -49,7 +49,7 @@ class ChallengeResult:
                 {self.name}, one is way too big.""")
         result_file = os.path.join(tests_path, f"{self.name}.pickle")
         with open(result_file, 'wb') as file:
-            pickle.dump(self, file)
+            dill.dump(self, file)
 
     def check(self):
         """returns test output on the ChallengeResult"""
@@ -87,7 +87,7 @@ class ChallengeResultTestCase(unittest.TestCase):
         name = re.sub(r'(?<!^)(?=[A-Z])', '_', klass).lower()[len('test_'):]
         result_file = _locate_pickle(name)
         with open(result_file, 'rb') as file:
-            self.result = pickle.load(file)
+            self.result = dill.load(file)
 
 
 def _locate_pickle(name):
