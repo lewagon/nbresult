@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 with open('requirements.txt') as f:
-    required = f.read().splitlines()
+    required = [c.strip() for c in f.readlines()]
 
 setup(name='nbresult',
       version='0.0.9',
