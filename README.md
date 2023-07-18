@@ -128,6 +128,19 @@ Check out detailed example below
 
 ![subdir](img/subdir_demo.png)
 
+### 2.3 Testing functions from notebook
+If you want to pass the functions from the notebook to the test case you need to enable `notebook_env`
+
+```python
+function_to_test = lambda x: x * 2
+
+from nbresult import ChallengeResult
+
+result = ChallengeResult("double", notebook_env=True, double_function=function_to_test)
+```
+
+This allows multiple test cases of the function to be tested in `double_test.py` by accessing `self.result.double_function`
+
 ## Testing
 
 Run `make`
