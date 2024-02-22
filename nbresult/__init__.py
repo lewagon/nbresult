@@ -68,9 +68,9 @@ class ChallengeResult:
             if self.subdir:
                 tests_directory = f'{tests_directory}/{self.subdir}'
             result = f"""
-{result}\n
-💯 You can submit your code through the JupyterLab git GUI!
-"""
+            {result}\n
+            :100: You can now submit your code through the JupyterLab git GUI. Submit by adding, committing and pushing the folder {tests_directory} (including all of its contents)!
+            """
 
         return result
 
