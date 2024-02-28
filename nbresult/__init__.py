@@ -55,7 +55,7 @@ class ChallengeResult:
         """returns test output on the ChallengeResult"""
         tests_path = self._locate_tests()
         file_path = f"test_{self.name}.py"
-        command = ["python3", "-m", "pytest", "-v", "--color=yes", file_path]
+        command = ["python", "-m", "pytest", "-v", "--color=yes", file_path]
         sub_process = subprocess.Popen(command,
                              cwd=tests_path, # set current working directory
                              stdin=subprocess.PIPE,
