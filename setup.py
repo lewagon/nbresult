@@ -4,6 +4,9 @@ from setuptools import setup
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open('requirements.txt') as f:
+    required = [c.strip() for c in f.readlines()]
+
 setup(name='nbresult',
       version='0.1.0',
       description='Extract results from Jupyter notebooks',
@@ -14,5 +17,6 @@ setup(name='nbresult',
       author='Kevin Robert',
       author_email='kevin@lewagon.org',
       packages=find_packages(include=["nbresult"]),
+      install_requires=required,
       include_package_data=True
 )
