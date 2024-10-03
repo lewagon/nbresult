@@ -69,7 +69,7 @@ class ChallengeResult:
                 tests_directory = f'{tests_directory}/{self.subdir}'
 
             nbresult_post_check_message = os.getenv('NBRESULT_POST_CHECK_MESSAGE')
-            if nbresult_post_check_message == 'JUPTERLAB':
+            if nbresult_post_check_message == 'JUPYTERLAB':
                 result = f"""
 {result}\n
 :100: You can now submit your code through the JupyterLab git GUI. Submit by adding, committing and pushing the folder {tests_directory} (including all of its contents)!
