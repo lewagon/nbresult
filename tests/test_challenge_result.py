@@ -109,3 +109,34 @@ class TestChallengeResult(unittest.TestCase):
         result.write()
         output = result.check()
         self.assertIn(f'add tests/{subdir}/unicity.pickle', output)
+
+    def test_post_check_message_when_env_not_set(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'package_challenge', 'toto')
+        subdir = 'first_tests'
+        tests_dir = os.path.join(challenge_dir, 'tests', subdir)
+        os.chdir(challenge_dir)
+        result = ChallengeResult('unicity', subdir=subdir, dummy=42)
+        result.write()
+        output = result.check()
+        # Manual tear down
+        os.chdir(cwd)
+        os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+
+        self.assertIn(f'You can commit your code', output)
+
+    def test_post_check_message_when_env_set_to_jupyterlab(self):
+        cwd = os.getcwd()
+        challenge_dir = os.path.join(os.path.dirname(__file__), 'fixtures', 'package_challenge', 'toto')
+        subdir = 'first_tests'
+        tests_dir = os.path.join(challenge_dir, 'tests', subdir)
+        os.chdir(challenge_dir)
+        result = ChallengeResult('unicity', subdir=subdir, dummy=42)
+        result.write()
+        os.environ['NBRESULT_POST_CHECK_MESSAGE'] = 'JUPYTERLAB'
+        output = result.check()
+        # Manual tear down
+        os.chdir(cwd)
+        os.remove(os.path.join(tests_dir, 'unicity.pickle'))
+        os.environ['NBRESULT_POST_CHECK_MESSAGE'] = ''
+        self.assertIn(f'You can now submit your code through the JupyterLab', output)
