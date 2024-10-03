@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(name='nbresult',
       version='0.1.1',
-      description='Adapt post check message to context.',
+      description='Extract results from Jupyter notebooks',
       license="MIT",
       long_description=long_description,
       long_description_content_type="text/markdown",
