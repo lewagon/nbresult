@@ -72,7 +72,7 @@ class ChallengeResult:
             if nbresult_post_check_message == 'JUPYTERLAB':
                 result = f"""
 {result}\n
-:100: You can now submit your code through the JupyterLab git GUI. Submit by adding, committing and pushing the folder {tests_directory} (including all of its contents)!
+:100: You can now save your changes and move on to the next challenge.
 """
             else:
                 result = f"""

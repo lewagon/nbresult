@@ -139,4 +139,4 @@ class TestChallengeResult(unittest.TestCase):
         os.chdir(cwd)
         os.remove(os.path.join(tests_dir, 'unicity.pickle'))
         os.environ['NBRESULT_POST_CHECK_MESSAGE'] = ''
-        self.assertIn(f'You can now submit your code through the JupyterLab', output)
+        self.assertIn(f'You can now save your changes and move on to the next challenge', output)
