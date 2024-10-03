@@ -67,10 +67,21 @@ class ChallengeResult:
             tests_directory = 'tests'
             if self.subdir:
                 tests_directory = f'{tests_directory}/{self.subdir}'
-            result = f"""
-            {result}\n
-            :100: You can now submit your code through the JupyterLab git GUI. Submit by adding, committing and pushing the folder {tests_directory} (including all of its contents)!
-            """
+
+            nbresult_post_check_message = os.getenv('NBRESULT_POST_CHECK_MESSAGE')
+            if nbresult_post_check_message == 'JUPTERLAB':
+                result = f"""
+{result}\n
+:100: You can now submit your code through the JupyterLab git GUI. Submit by adding, committing and pushing the folder {tests_directory} (including all of its contents)!
+"""
+            else:
+                result = f"""
+{result}\n
+💯 You can commit your code:\n
+\033[1;32mgit\033[39m add {tests_directory}/{self.name}.pickle\n
+\033[32mgit\033[39m commit -m \033[33m'Completed {self.name} step'\033[39m\n
+\033[32mgit\033[39m push origin master
+"""
 
         return result
 
