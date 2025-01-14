@@ -67,7 +67,15 @@ class ChallengeResult:
             tests_directory = 'tests'
             if self.subdir:
                 tests_directory = f'{tests_directory}/{self.subdir}'
-            result = f"""
+
+            nbresult_post_check_message = os.getenv('NBRESULT_POST_CHECK_MESSAGE')
+            if nbresult_post_check_message == 'JUPYTERLAB':
+                result = f"""
+{result}\n
+:100: You can now save your changes and move on to the next challenge.
+"""
+            else:
+                result = f"""
 {result}\n
 💯 You can commit your code:\n
 \033[1;32mgit\033[39m add {tests_directory}/{self.name}.pickle\n
