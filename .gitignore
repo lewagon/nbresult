@@ -3,3 +3,4 @@ nbresult.egg-info
 dist
 **/*pycache*
 build/*
+.env
