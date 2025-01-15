@@ -1,0 +1,29 @@
+name: "Build and Publish Package on Pypi"
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  publish-on-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install setuptools wheel twine
+
+      - name: Build and publish on Pypi
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          make build
+          make publish
